@@ -1,0 +1,187 @@
+{
+  "kind": "build_request",
+  "title": "New e-commerce website (product catalog, cart, and order checkout)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a customer-facing storefront that lists products with key details (name, price, primary image, short description) and supports browsing/searching.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build a brand new e commerce website to sell products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A Products page displays a grid/list of products pulled from the backend.",
+        "Users can search by product name (client-side or backend-driven) and see filtered results.",
+        "Each product card shows at least: image, name, and price."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add a product details experience that allows a user to view full product information and add a selected quantity to a cart.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build a brand new e commerce website to sell products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking a product opens a Product Details view with full description and image(s).",
+        "Users can select quantity and add the item to the cart.",
+        "Adding to cart updates cart item count and persists across navigation."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement a shopping cart UI with the ability to update quantities, remove items, and view totals (subtotal and item count).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build a brand new e commerce website to sell products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Cart page/drawer shows line items with quantity controls and remove action.",
+        "Subtotal updates correctly when quantities change or items are removed.",
+        "Cart state is maintained during a session and across page navigation."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement a basic checkout flow that collects shipping/contact information and places an order (no external payment processor unless explicitly added later).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build a brand new e commerce website to sell products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Checkout form collects at minimum: full name, email, shipping address (street, city, region/state, postal code, country).",
+        "Submitting checkout creates an Order in the backend with line items and totals derived from product prices at time of purchase.",
+        "User sees an order confirmation view with an order ID and order summary."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add order history for signed-in users using Internet Identity, so customers can view their past orders and order details.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build a brand new e commerce website to sell products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can sign in with Internet Identity and see a My Orders page.",
+        "My Orders lists orders created by the signed-in principal.",
+        "Users can open an order to view line items, totals, and shipping info (as stored)."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Add an admin-only product management area to create, edit, and archive/unpublish products (access controlled by a backend-admin allowlist).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build a brand new e commerce website to sell products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend maintains an admin allowlist of principals and rejects admin operations for non-admin users.",
+        "Admin UI supports: create product, edit product, toggle published/archived status.",
+        "Published products appear in the storefront; unpublished/archived products do not."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Define backend data models and APIs for Products, Carts (session/local on frontend is acceptable), and Orders with stable persistence suitable for canister upgrades.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build a brand new e commerce website to sell products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes query/update methods needed for: list products, get product by id, admin upsert product, create order, list orders by caller, get order by id (authorized).",
+        "Data is stored in a way that remains stable across upgrades (no accidental loss on upgrade).",
+        "Order totals are computed from stored line items/prices and are consistent across reads."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Create a cohesive, distinctive visual theme for the storefront and admin area and apply it consistently (colors, typography, spacing, components). Avoid a blue/purple theme.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build a brand new e commerce website to sell products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UI uses a consistent design system (buttons, inputs, cards, headings) across all pages.",
+        "Theme feels intentionally styled (e.g., warm neutral palette, strong typography hierarchy) and is applied consistently.",
+        "Layout is responsive and usable on mobile and desktop."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Add required generated static images to the frontend and use them in the UI (served from frontend/public/assets/generated), including a logo, hero banner, and a product placeholder image.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Build a brand new e commerce website to sell products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated and are referenced directly by the frontend.",
+        "Storefront uses the hero banner on the landing/home section (or top of Products page).",
+        "Products without an image display the placeholder image."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in backend/main.mo); only add a migration file if an upgrade requires it.",
+    "Do not modify frontend immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui (compose these components instead).",
+    "User-facing text must be in English."
+  ],
+  "nonGoals": [
+    "Integrating a real payment processor (e.g., Stripe) unless explicitly requested.",
+    "Shipping rate calculations, tax/VAT engines, discount codes, gift cards, or subscriptions.",
+    "Real-time inventory syncing or external database integrations."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimal wordmark logo, warm neutral palette, transparent background (store-logo.dim_512x512.png)",
+      "Wide hero banner with abstract shopping/retail themed shapes, warm neutral palette (store-hero-banner.dim_1600x600.png)",
+      "Simple product placeholder image (box/package illustration), neutral background (product-placeholder.dim_800x800.png)"
+    ],
+    "edits": []
+  }
+}

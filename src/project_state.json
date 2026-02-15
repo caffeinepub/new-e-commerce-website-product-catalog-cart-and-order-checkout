@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a brand new e-commerce website to sell products.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Minimal wordmark logo, warm neutral palette, transparent background (store-logo.dim_512x512.png)\n- Wide hero banner with abstract shopping/retail themed shapes, warm neutral palette (store-hero-banner.dim_1600x600.png)\n- Simple product placeholder image (box/package illustration), neutral background (product-placeholder.dim_800x800.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-customer-facing-storefront-that-lists-products-with-key-details-name-price-primary-image-short-description-and-supports-browsing-searching",
+      "title": "Create a customer-facing storefront that lists products with key details (name, price, primary image, short description) and supports browsing/searching.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-product-details-experience-that-allows-a-user-to-view-full-product-information-and-add-a-selected-quantity-to-a-cart",
+      "title": "Add a product details experience that allows a user to view full product information and add a selected quantity to a cart.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-shopping-cart-ui-with-the-ability-to-update-quantities-remove-items-and-view-totals-subtotal-and-item-count",
+      "title": "Implement a shopping cart UI with the ability to update quantities, remove items, and view totals (subtotal and item count).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-basic-checkout-flow-that-collects-shipping-contact-information-and-places-an-order-no-external-payment-processor-unless-explicitly-added-later",
+      "title": "Implement a basic checkout flow that collects shipping/contact information and places an order (no external payment processor unless explicitly added later).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-order-history-for-signed-in-users-using-internet-identity-so-customers-can-view-their-past-orders-and-order-details",
+      "title": "Add order history for signed-in users using Internet Identity, so customers can view their past orders and order details.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-admin-only-product-management-area-to-create-edit-and-archive-unpublish-products-access-controlled-by-a-backend-admin-allowlist",
+      "title": "Add an admin-only product management area to create, edit, and archive/unpublish products (access controlled by a backend-admin allowlist).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-cohesive-distinctive-visual-theme-for-the-storefront-and-admin-area-and-apply-it-consistently-colors-typography-spacing-components-avoid-a-blue-purple-theme",
+      "title": "Create a cohesive, distinctive visual theme for the storefront and admin area and apply it consistently (colors, typography, spacing, components). Avoid a blue/purple theme.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-required-generated-static-images-to-the-frontend-and-use-them-in-the-ui-served-from-frontend-public-assets-generated-including-a-logo-hero-banner-and-a-product-placeholder-image",
+      "title": "Add required generated static images to the frontend and use them in the UI (served from frontend/public/assets/generated), including a logo, hero banner, and a product placeholder image.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a new e-commerce website for selling products (storefront + product sales flow).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Define backend data models and APIs for Products, Carts (session/local on frontend is acceptable), and Orders with stable persistence suitable for canister upgrades.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "New e-commerce website (product catalog, cart, and order checkout)",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

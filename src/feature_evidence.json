@@ -1,0 +1,188 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-customer-facing-storefront-that-lists-products-with-key-details-name-price-primary-image-short-description-and-supports-browsing-searching",
+      "featureTitle": "Create a customer-facing storefront that lists products with key details (name, price, primary image, short description) and supports browsing/searching.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ProductCard.tsx",
+        "frontend/src/components/SearchBar.tsx",
+        "frontend/src/pages/ProductsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-product-details-experience-that-allows-a-user-to-view-full-product-information-and-add-a-selected-quantity-to-a-cart",
+      "featureTitle": "Add a product details experience that allows a user to view full product information and add a selected quantity to a cart.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/cart/CartContext.tsx",
+        "frontend/src/cart/cartStorage.ts",
+        "frontend/src/components/HeaderNav.tsx",
+        "frontend/src/components/QuantityPicker.tsx",
+        "frontend/src/pages/ProductDetailsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-shopping-cart-ui-with-the-ability-to-update-quantities-remove-items-and-view-totals-subtotal-and-item-count",
+      "featureTitle": "Implement a shopping cart UI with the ability to update quantities, remove items, and view totals (subtotal and item count).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/CartLineItem.tsx",
+        "frontend/src/pages/CartPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-basic-checkout-flow-that-collects-shipping-contact-information-and-places-an-order-no-external-payment-processor-unless-explicitly-added-later",
+      "featureTitle": "Implement a basic checkout flow that collects shipping/contact information and places an order (no external payment processor unless explicitly added later).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/CheckoutPage.tsx",
+        "frontend/src/pages/OrderConfirmationPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-order-history-for-signed-in-users-using-internet-identity-so-customers-can-view-their-past-orders-and-order-details",
+      "featureTitle": "Add order history for signed-in users using Internet Identity, so customers can view their past orders and order details.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Auth/LoginButton.tsx",
+        "frontend/src/components/Auth/ProfileSetupModal.tsx",
+        "frontend/src/components/Auth/RequireAuth.tsx",
+        "frontend/src/hooks/useUserProfile.ts",
+        "frontend/src/hooks/useUserRole.ts",
+        "frontend/src/pages/MyOrdersPage.tsx",
+        "frontend/src/pages/OrderDetailsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-admin-only-product-management-area-to-create-edit-and-archive-unpublish-products-access-controlled-by-a-backend-admin-allowlist",
+      "featureTitle": "Add an admin-only product management area to create, edit, and archive/unpublish products (access controlled by a backend-admin allowlist).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Auth/RequireAdmin.tsx",
+        "frontend/src/hooks/useAdminProducts.ts",
+        "frontend/src/pages/ProductsPage.tsx",
+        "frontend/src/pages/admin/AdminProductEditorPage.tsx",
+        "frontend/src/pages/admin/AdminProductsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-cohesive-distinctive-visual-theme-for-the-storefront-and-admin-area-and-apply-it-consistently-colors-typography-spacing-components-avoid-a-blue-purple-theme",
+      "featureTitle": "Create a cohesive, distinctive visual theme for the storefront and admin area and apply it consistently (colors, typography, spacing, components). Avoid a blue/purple theme.",
+      "files": [
+        "frontend/src/components/HeaderNav.tsx",
+        "frontend/src/components/ProductCard.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/ProductsPage.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-required-generated-static-images-to-the-frontend-and-use-them-in-the-ui-served-from-frontend-public-assets-generated-including-a-logo-hero-banner-and-a-product-placeholder-image",
+      "featureTitle": "Add required generated static images to the frontend and use them in the UI (served from frontend/public/assets/generated), including a logo, hero banner, and a product placeholder image.",
+      "files": [
+        "frontend/src/components/HeaderNav.tsx",
+        "frontend/src/components/ProductCard.tsx",
+        "frontend/src/pages/ProductDetailsPage.tsx",
+        "frontend/src/pages/ProductsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

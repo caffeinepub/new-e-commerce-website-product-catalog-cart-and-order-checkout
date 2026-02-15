@@ -1,0 +1,107 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-15T12:47:14.902Z",
+  "summary": "Diff adds a full frontend route structure (products, product details, cart, checkout, orders, admin) plus cart persistence in localStorage, search UI, and auth gating. Backend shows product/order/user profile types and admin-only product management with access control, but the backend file is truncated; persistence/upgrade safety and order shipping/contact detail storage cannot be confirmed and appears incomplete based on shown types.",
+  "missing_requirements": [
+    {
+      "id": "REQ-4",
+      "requirement": "Checkout must collect and store shipping/contact info fields (full name, email, street, city, region/state, postal code, country) and show an order confirmation with order summary.",
+      "reason": "The backend NewOrder type shown only has `shippingAddress : Text` and `contactInfo : Text` (no structured required fields), and the Order type shown does not include shipping/contact info at all, so the backend cannot store/return the required data as specified.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Order details must include shipping info as stored, and order history must be tied to the signed-in principal.",
+      "reason": "The backend Order type shown lacks any shipping/contact fields, so order detail views cannot show shipping info \"as stored\". While orders include `customer : Principal`, the required stored shipping info is not present in the shown model.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Backend data must have stable persistence suitable for canister upgrades (no accidental loss on upgrade).",
+      "reason": "The backend shows in-memory `let products = Map.empty...` / `let orders = Map.empty...` / `let userProfiles = Map.empty...` without any visible `stable` variables or `preupgrade/postupgrade` handling in the truncated snippet; upgrade-safe persistence is not evidenced.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Generated static images (logo, hero banner, product placeholder) must exist under `frontend/public/assets/generated` and be used in the UI (hero banner shown on landing/top of Products; placeholder for missing product images).",
+      "reason": "UI references logo and placeholder paths, but the diff summary omits binary/static assets (\"Omitted files due to limits: added=17\") and does not show any Products page/hero banner usage. Existence and hero banner placement cannot be verified from provided text diff.",
+      "evidence": [
+        "frontend/src/components/HeaderNav.tsx",
+        "frontend/src/components/ProductCard.tsx",
+        "frontend/src/components/CartLineItem.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User profile management and mandatory profile setup modal (collecting/displaying a user name).",
+      "reason": "BuildRequest does not ask for user profiles or a required profile onboarding flow; only Internet Identity sign-in for order history/admin gating.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/Auth/ProfileSetupModal.tsx",
+        "frontend/src/hooks/useUserProfile.ts"
+      ]
+    },
+    {
+      "description": "Caffeine.ai referral footer branding/link and heart emoji in footer text.",
+      "reason": "Not requested by BuildRequest; additionally introduces non-specified branding and an emoji in user-facing text.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "description": "Admin secret token initialization via URL parameter `caffeineAdminToken` and `_initializeAccessControlWithSecret`.",
+      "reason": "BuildRequest specifies an admin allowlist of principals, but does not request a secret-token bootstrap mechanism via URL params.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/cart/CartContext.tsx",
+    "frontend/src/cart/cartStorage.ts",
+    "frontend/src/components/Auth/LoginButton.tsx",
+    "frontend/src/components/Auth/ProfileSetupModal.tsx",
+    "frontend/src/components/Auth/RequireAdmin.tsx",
+    "frontend/src/components/Auth/RequireAuth.tsx",
+    "frontend/src/components/CartLineItem.tsx",
+    "frontend/src/components/HeaderNav.tsx",
+    "frontend/src/components/ProductCard.tsx",
+    "frontend/src/components/QuantityPicker.tsx",
+    "frontend/src/components/SearchBar.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useAdminProducts.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useUserProfile.ts",
+    "frontend/src/hooks/useUserRole.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/CartPage.tsx",
+    "frontend/src/pages/CheckoutPage.tsx",
+    "frontend/src/pages/MyOrdersPage.tsx",
+    "frontend/src/pages/OrderConfirmationPage.tsx",
+    "frontend/src/pages/OrderDetailsPage.tsx",
+    "frontend/src/pages/ProductDetailsPage.tsx",
+    "frontend/src/pages/ProductsPage.tsx",
+    "frontend/src/pages/admin/AdminProductEditorPage.tsx",
+    "frontend/src/pages/admin/AdminProductsPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,330 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "E-commerce storefront (catalog, cart, checkout, orders, admin) — frontend plan",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build a public Products browsing experience with product cards, search, and backend-driven product listing.",
+      "acceptanceCriteria": [
+        "A Products page displays a grid/list of products pulled from the backend.",
+        "Users can search by product name (client-side or backend-driven) and see filtered results.",
+        "Each product card shows at least: image, name, and price."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the app shell with hash-based routing and routes for Products and Product Details; wire navigation so users can reach the Products experience."
+        },
+        {
+          "path": "frontend/src/pages/ProductsPage.tsx",
+          "operation": "create",
+          "description": "Implement the Products page that loads products from the backend actor and renders a responsive grid/list with search by product name."
+        },
+        {
+          "path": "frontend/src/hooks/useProducts.ts",
+          "operation": "create",
+          "description": "Add React Query hooks to fetch all products and search products using backend capabilities (getAllProducts, searchProducts) via useActor."
+        },
+        {
+          "path": "frontend/src/components/ProductCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable product card component showing primary image, name, price, and a short description preview; clicking navigates to Product Details."
+        },
+        {
+          "path": "frontend/src/components/SearchBar.tsx",
+          "operation": "create",
+          "description": "Add a search input component used on Products page to trigger client-side filtering and/or backend-driven search."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Create a Product Details view that shows full product info and supports adding a selected quantity to cart with persistent cart count.",
+      "acceptanceCriteria": [
+        "Clicking a product opens a Product Details view with full description and image(s).",
+        "Users can select quantity and add the item to the cart.",
+        "Adding to cart updates cart item count and persists across navigation."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProductDetailsPage.tsx",
+          "operation": "create",
+          "description": "Implement Product Details view that loads a product by id from the backend actor and provides quantity selection + Add to Cart action."
+        },
+        {
+          "path": "frontend/src/hooks/useProduct.ts",
+          "operation": "create",
+          "description": "Add a React Query hook to fetch a single product by id using backend capability (getProduct) via useActor."
+        },
+        {
+          "path": "frontend/src/cart/CartContext.tsx",
+          "operation": "create",
+          "description": "Create a cart context/provider that holds cart line items, exposes add/update/remove actions, and persists cart state across navigation."
+        },
+        {
+          "path": "frontend/src/cart/cartStorage.ts",
+          "operation": "create",
+          "description": "Implement localStorage/session persistence helpers for cart state to ensure it survives route changes and refresh during a session."
+        },
+        {
+          "path": "frontend/src/components/QuantityPicker.tsx",
+          "operation": "create",
+          "description": "Create a quantity selector component used on Product Details and Cart, with basic validation (min 1)."
+        },
+        {
+          "path": "frontend/src/components/HeaderNav.tsx",
+          "operation": "create",
+          "description": "Add a header/navigation component showing the current cart item count and links to Products, Cart, Checkout, and authenticated areas as applicable."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap routed views with CartContext provider and wire Product Details route (e.g., #/products/:id) so it can be reached from product cards and back navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement a full Cart UI to update quantities, remove items, and show subtotal and item count using persisted cart state.",
+      "acceptanceCriteria": [
+        "Cart page/drawer shows line items with quantity controls and remove action.",
+        "Subtotal updates correctly when quantities change or items are removed.",
+        "Cart state is maintained during a session and across page navigation."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/CartPage.tsx",
+          "operation": "create",
+          "description": "Implement Cart page UI that lists line items, supports quantity updates and remove, and shows subtotal and total item count computed from cart and product prices."
+        },
+        {
+          "path": "frontend/src/cart/useCart.ts",
+          "operation": "create",
+          "description": "Add a convenience hook to access CartContext actions/state for use across pages/components."
+        },
+        {
+          "path": "frontend/src/components/CartLineItem.tsx",
+          "operation": "create",
+          "description": "Create a cart line item component with quantity controls, remove action, and line total display."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire Cart route into the router and ensure HeaderNav links to Cart and displays live cart count."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Build a basic checkout flow that collects shipping/contact info, places an order, and shows an order confirmation view.",
+      "acceptanceCriteria": [
+        "Checkout form collects at minimum: full name, email, shipping address (street, city, region/state, postal code, country).",
+        "Submitting checkout creates an Order in the backend with line items and totals derived from product prices at time of purchase.",
+        "User sees an order confirmation view with an order ID and order summary."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/CheckoutPage.tsx",
+          "operation": "create",
+          "description": "Implement checkout form (English UI) collecting required contact + shipping fields; on submit, call backend capability (placeOrder) with cart line items and concatenated contact/shipping strings; handle success/failure states."
+        },
+        {
+          "path": "frontend/src/pages/OrderConfirmationPage.tsx",
+          "operation": "create",
+          "description": "Implement confirmation view that shows the returned order ID and an order summary (items/totals) by loading the order from backend capability (getOrder)."
+        },
+        {
+          "path": "frontend/src/hooks/useOrder.ts",
+          "operation": "create",
+          "description": "Add a React Query hook for fetching an order by id using backend capability (getOrder) via useActor; used for confirmation and order details."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire Checkout and Order Confirmation routes into the router; after successful checkout, clear cart state and navigate to the confirmation route."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add Internet Identity sign-in and a My Orders experience for signed-in users, including order details and stored shipping info.",
+      "acceptanceCriteria": [
+        "Users can sign in with Internet Identity and see a My Orders page.",
+        "My Orders lists orders created by the signed-in principal.",
+        "Users can open an order to view line items, totals, and shipping info (as stored)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Implement a Login/Logout button using the existing Internet Identity hook; on logout clear cached queries (React Query) and any user-scoped cached UI state. Use the authorization component guidance for login/logout handling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/Auth/ProfileSetupModal.tsx",
+          "operation": "create",
+          "description": "Add a first-login profile setup modal that asks for a human-readable name and saves it using backend capability (saveCallerUserProfile); use getCallerUserProfile to decide when to show. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useUserProfile.ts",
+          "operation": "create",
+          "description": "Add React Query hooks to load current user profile (getCallerUserProfile) and save profile (saveCallerUserProfile), following the authorization component guidance to prevent modal flash. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useUserRole.ts",
+          "operation": "create",
+          "description": "Add a hook to fetch the current caller role/admin status (getCallerUserRole/isCallerAdmin) to support conditional navigation and admin gating. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/MyOrdersPage.tsx",
+          "operation": "create",
+          "description": "Implement My Orders page that requires authentication; fetch orders for the signed-in principal using backend capability (getCustomerOrders) and render a list with links to Order Details."
+        },
+        {
+          "path": "frontend/src/pages/OrderDetailsPage.tsx",
+          "operation": "create",
+          "description": "Implement Order Details view that requires authentication; load order data using backend capability (getOrder) and display line items, totals, and stored shipping/contact info."
+        },
+        {
+          "path": "frontend/src/components/Auth/RequireAuth.tsx",
+          "operation": "create",
+          "description": "Create a route wrapper that blocks access to authenticated-only screens (My Orders, Order Details, Admin) when not logged in and displays an access prompt/error; keep storefront browsing public to match the BuildRequest while applying authorization guidance only where required. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire LoginButton into the header; add routes for My Orders and Order Details, wrapped with RequireAuth so only signed-in users can access them."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Create an admin-only product management UI for create/edit and publish/archive (availability) controls, guarded in the UI.",
+      "acceptanceCriteria": [
+        "Backend maintains an admin allowlist of principals and rejects admin operations for non-admin users.",
+        "Admin UI supports: create product, edit product, toggle published/archived status.",
+        "Published products appear in the storefront; unpublished/archived products do not."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/admin/AdminProductsPage.tsx",
+          "operation": "create",
+          "description": "Implement an Admin Products page (UI-only gating) that lists products and provides actions to create, edit, and toggle availability (published/archived) using backend capabilities (createProduct, updateProduct, setProductAvailability)."
+        },
+        {
+          "path": "frontend/src/pages/admin/AdminProductEditorPage.tsx",
+          "operation": "create",
+          "description": "Implement an admin product editor view with form fields for name, price, image URL/path, description, and availability toggling; supports both create and edit flows."
+        },
+        {
+          "path": "frontend/src/components/Auth/RequireAdmin.tsx",
+          "operation": "create",
+          "description": "Create an admin-only guard wrapper that checks admin status (isCallerAdmin/getCallerUserRole) and shows an Access Denied screen for non-admin users. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useAdminProducts.ts",
+          "operation": "create",
+          "description": "Add React Query hooks/mutations for admin product operations (create/update/toggle availability) and for refreshing product lists after changes."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire Admin routes into the router and wrap them with RequireAuth + RequireAdmin; add a conditional 'Admin' navigation link in HeaderNav for admins only."
+        },
+        {
+          "path": "frontend/src/pages/ProductsPage.tsx",
+          "operation": "modify",
+          "description": "Ensure the storefront only displays published/available products (filter out unavailable items in the UI if backend returns them), so unpublished/archived products do not appear."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Apply a cohesive warm-neutral visual theme and responsive layout across storefront and admin (avoid blue/purple).",
+      "acceptanceCriteria": [
+        "UI uses a consistent design system (buttons, inputs, cards, headings) across all pages.",
+        "Theme feels intentionally styled (e.g., warm neutral palette, strong typography hierarchy) and is applied consistently.",
+        "Layout is responsive and usable on mobile and desktop."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styles and CSS variables for a warm neutral palette (avoid blue/purple), typography scale, spacing, and base element styling; align Tailwind tokens (bg/fg/primary/etc.) with these variables."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme extensions if needed to better express the warm neutral palette and typography (keeping existing shadcn-compatible CSS variable approach intact)."
+        },
+        {
+          "path": "frontend/src/components/ui/DesignSystemNotes.md",
+          "operation": "create",
+          "description": "Document the intended design tokens (colors/typography/spacing) and component usage conventions for consistency across pages without modifying the immutable frontend/src/components/ui directory contents."
+        },
+        {
+          "path": "frontend/src/components/HeaderNav.tsx",
+          "operation": "modify",
+          "description": "Update header layout/styles to match the new theme (warm neutrals), ensure mobile responsiveness, and keep navigation consistent across storefront/admin."
+        },
+        {
+          "path": "frontend/src/components/ProductCard.tsx",
+          "operation": "modify",
+          "description": "Refine product card styling (typography hierarchy, spacing, hover/focus states) to match the theme and improve responsiveness."
+        },
+        {
+          "path": "frontend/src/pages/ProductsPage.tsx",
+          "operation": "modify",
+          "description": "Add a hero/landing section at the top of the Products page to establish branding and theme consistency without introducing a new top-level route."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Add and wire required generated static images (logo, hero banner, product placeholder) from frontend/public/assets/generated into the UI.",
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated and are referenced directly by the frontend.",
+        "Storefront uses the hero banner on the landing/home section (or top of Products page).",
+        "Products without an image display the placeholder image."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/store-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated logo image asset at the required path for direct frontend use."
+        },
+        {
+          "path": "frontend/public/assets/generated/store-hero-banner.dim_1600x600.png",
+          "operation": "create",
+          "description": "Add the generated hero banner image asset at the required path for direct frontend use."
+        },
+        {
+          "path": "frontend/public/assets/generated/product-placeholder.dim_800x800.png",
+          "operation": "create",
+          "description": "Add the generated product placeholder image asset at the required path for direct frontend use."
+        },
+        {
+          "path": "frontend/src/components/HeaderNav.tsx",
+          "operation": "modify",
+          "description": "Wire frontend/public/assets/generated/store-logo.dim_512x512.png into the header as the brand mark (use direct static asset reference)."
+        },
+        {
+          "path": "frontend/src/pages/ProductsPage.tsx",
+          "operation": "modify",
+          "description": "Wire frontend/public/assets/generated/store-hero-banner.dim_1600x600.png into the top hero section on the Products page (use direct static asset reference)."
+        },
+        {
+          "path": "frontend/src/components/ProductCard.tsx",
+          "operation": "modify",
+          "description": "Ensure products with no usable image display fallback frontend/public/assets/generated/product-placeholder.dim_800x800.png (use direct static asset reference)."
+        },
+        {
+          "path": "frontend/src/pages/ProductDetailsPage.tsx",
+          "operation": "modify",
+          "description": "Ensure the product image area uses the same fallback frontend/public/assets/generated/product-placeholder.dim_800x800.png when product image is missing/empty (use direct static asset reference)."
+        }
+      ]
+    }
+  ]
+}
